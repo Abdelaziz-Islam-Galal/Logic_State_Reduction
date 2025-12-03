@@ -1,6 +1,7 @@
 package State_Table;
 
 public class Table {
+    private static Table instance = null;
     private int numOfVariables;
     private String type; // mealy or moore
     private State[] states;
@@ -19,11 +20,22 @@ public class Table {
         counter = states.length;
     }
 
-    public static Table getInstatce(int numOfVariables, int numOfStates, String type) {
-        return new Table(numOfVariables, numOfStates, type);
+    public static Table getInstatce() {
+        return instance;
     }
+
+    public static Table getInstatce(int numOfVariables, int numOfStates, String type) {
+        if (instance == null) {
+            instance = new Table(numOfVariables, numOfStates, type);
+        }
+        return instance;
+    }
+
     public static Table getInstatce(int numOfVariables, State[] states, String type) {
-        return new Table(numOfVariables, states, type);
+        if (instance == null) {
+            instance = new Table(numOfVariables, states, type);
+        }
+        return instance;
     }
 
     public void addState(State state) {
