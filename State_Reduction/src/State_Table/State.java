@@ -17,4 +17,14 @@ public class State {
         }
     }
 
+    public String getPresent() {
+        return present;
+    }
+    public NextState getNextState() {
+        return nextState;
+    }
+    public StateOutput getStateOutput() {
+        return stateOutput;
+    }
+
 }

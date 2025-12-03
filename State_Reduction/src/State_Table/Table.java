@@ -6,17 +6,24 @@ public class Table {
     private State[] states;
     private int counter = 0;
 
-    public Table(int numOfVariables, int numOfStates, String type) {
+    private Table(int numOfVariables, int numOfStates, String type) {
         this.numOfVariables = numOfVariables;
         this.type = type;
         this.states = new State[numOfStates];
     }
 
-    public Table(int numOfVariables, State[] states, String type) {
+    private Table(int numOfVariables, State[] states, String type) {
         this.states = states;
         this.numOfVariables = numOfVariables;
         this.type = type;
         counter = states.length;
+    }
+
+    public static Table getInstatce(int numOfVariables, int numOfStates, String type) {
+        return new Table(numOfVariables, numOfStates, type);
+    }
+    public static Table getInstatce(int numOfVariables, State[] states, String type) {
+        return new Table(numOfVariables, states, type);
     }
 
     public void addState(State state) {
@@ -27,4 +34,13 @@ public class Table {
         State state = new State(numOfVariables, present, this.type);
         this.states[counter++] = state;
     }
+
+    public State[] getStates() {
+        return states;
+    }
+
+    public int getNumOfVariables() {
+        return numOfVariables;
+    }
+
 }

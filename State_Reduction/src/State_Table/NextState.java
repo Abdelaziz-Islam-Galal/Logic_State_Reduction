@@ -13,4 +13,8 @@ public class NextState {
     protected void setNextState(int index, String state) {
         this.nextStates[index] = state;
     }
+
+    public String[] getNextStates() {
+        return nextStates;
+    }
 }
