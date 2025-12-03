@@ -1,29 +1,22 @@
 package State_Table;
 public class State {
     private String present;
-    private NextState nextState;
-    private StateOutput stateOutput;
+    private String[] nextState;
+    private String[] stateOutput;
     
-    public State(int numOfVariables, String present, String type) {
+    protected State(String present, String[] nextStates, String[] outputs) {
         this.present = present;
-        this.nextState = new NextState(numOfVariables);
-
-        if(type.equals("mealy")) {
-            this.stateOutput = new StateOutput(numOfVariables);
-        } else if(type.equals("moore")) {
-            this.stateOutput = new StateOutput(1);
-        } else {
-            throw new IllegalArgumentException("Invalid state type: " + type);
-        }
+        this.nextState = nextStates;
+        this.stateOutput = outputs;
     }
 
-    public String getPresent() {
+    protected String getPresent() {
         return present;
     }
-    public NextState getNextState() {
+    protected String[] getNextState() {
         return nextState;
     }
-    public StateOutput getStateOutput() {
+    protected String[] getStateOutput() {
         return stateOutput;
     }
 
