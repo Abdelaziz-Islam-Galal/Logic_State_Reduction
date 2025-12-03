@@ -2,10 +2,10 @@ package State_Table;
 
 public class Table {
     private static Table instance = null;
-    private int numOfVariables;
-    private String type; // mealy or moore
-    private State[] states;
-    private int counter = 0;
+    private static int numOfVariables;
+    private static String type; // mealy or moore
+    private static State[] states;
+    private static int counter = 0;
 
     private Table(int numOfVariables, int numOfStates, String type) {
         this.numOfVariables = numOfVariables;
@@ -13,42 +13,39 @@ public class Table {
         this.states = new State[numOfStates];
     }
 
-    private Table(int numOfVariables, State[] states, String type) {
-        this.states = states;
-        this.numOfVariables = numOfVariables;
-        this.type = type;
-        counter = states.length;
-    }
-
     public static Table getInstatce() {
         return instance;
     }
 
-    public static Table getInstatce(int numOfVariables, int numOfStates, String type) {
+    public static Table createTable(int numOfVariables, int numOfStates, String type) {
         if (instance == null) {
             instance = new Table(numOfVariables, numOfStates, type);
         }
         return instance;
     }
 
-    public static Table getInstatce(int numOfVariables, State[] states, String type) {
-        if (instance == null) {
-            instance = new Table(numOfVariables, states, type);
+    public void addState(String present, String[] nextStates, String[] outputs) {
+        if (counter >= states.length) {
+            throw new IndexOutOfBoundsException("State Table is full. Cannot add more states.");
         }
-        return instance;
-    }
+        if (nextStates.length != (1 << numOfVariables)) { // 2^numOfVariables
+            throw new IllegalArgumentException("Number of next states does not match number of variables.");
+        }
+        if (outputs.length != (type.equals("mealy") ? (1 << numOfVariables) : 1)) {
+            throw new IllegalArgumentException("Number of outputs does not match state type.");
+        } // if mealy number of outputs = 2^numOfVariables else moore number of outputs =
+          // 1
 
-    public void addState(State state) {
-        this.states[counter++] = state;
-    }
-
-    public void addState(int numOfVariables, String present) {
-        State state = new State(numOfVariables, present, this.type);
-        this.states[counter++] = state;
+        State state = new State(present, nextStates, outputs);
+        states[counter++] = state;
     }
 
     public State[] getStates() {
-        return states;
+        if (counter == states.length) {
+            return states;
+        } else {
+            return null; // tabel incomplete
+        }
     }
 
     public int getNumOfVariables() {
